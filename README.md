@@ -62,3 +62,19 @@ The waveform below shows the basic ADDI instruction execution.
 
 ![ADDI waveform](docs/waveform_addi.png)
 
+## Verification Results
+
+The processor was simulated using Icarus Verilog, and the waveform was inspected using Surfer.
+
+### Test Case: ADDI
+
+- **Instruction:** `ADDI x1, x0, 5`
+- **Instruction encoding:** `00500093`
+- **Expected ALU result:** `5`
+- **Observed ALU result:** `5`
+- **Expected write-back data:** `5`
+- **Observed write-back data:** `5`
+- **Status:** Passed
+
+The simulation waveform is available in [`docs/riscv_addi_writeback_waveform.png`](docs/riscv_addi_writeback_waveform.png).
+
