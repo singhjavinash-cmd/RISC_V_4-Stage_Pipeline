@@ -52,8 +52,13 @@ vvp sim.out
 
 The testbench generates `riscv_wave.vcd`. Open it in a waveform viewer such as GTKWave or Surfer.
 
+## Processor Architecture
+
+![RISC-V 4-Stage Architecture](docs/riscv_architecture.png)
+
 ## Simulation Waveform
 
 The waveform below shows the basic ADDI instruction execution.
 
 ![ADDI waveform](docs/waveform_addi.png)
+
