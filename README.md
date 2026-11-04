@@ -122,3 +122,13 @@ Additional waveform screenshots are available in the `docs/` directory.
 - Execute and Memory operations share one pipeline stage.
 - Verification covers the test cases listed above; additional instruction and hazard testing can further improve coverage.
 - No FPGA implementation or physical design results are included in this repository yet.
+
+## Synthesis
+
+The RTL was synthesized and checked using Yosys.
+
+The synthesis report is available at
+[`docs/synthesis_report.txt`](docs/synthesis_report.txt).
+
+The report includes the synthesized hierarchy, cell statistics,
+and structural checks.

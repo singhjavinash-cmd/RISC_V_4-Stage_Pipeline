@@ -1,0 +1,1796 @@
+
+ /----------------------------------------------------------------------------\
+ |  yosys -- Yosys Open SYnthesis Suite                                       |
+ |  Copyright (C) 2012 - 2026  Claire Xenia Wolf <claire@yosyshq.com>         |
+ |  Distributed under an ISC-like license, type "license" to see terms        |
+ \----------------------------------------------------------------------------/
+ Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)
+
+-- Running command `read_verilog -sv rtl/*.v; hierarchy -check -top riscv_top; proc; opt; check; stat' --
+
+1. Executing Verilog-2005 frontend: rtl/alu.v
+Parsing SystemVerilog input from `rtl/alu.v' to AST representation.
+Generating RTLIL representation for module `\alu'.
+Successfully finished Verilog frontend.
+
+2. Executing Verilog-2005 frontend: rtl/control_unit.v
+Parsing SystemVerilog input from `rtl/control_unit.v' to AST representation.
+Generating RTLIL representation for module `\control_unit'.
+Successfully finished Verilog frontend.
+
+3. Executing Verilog-2005 frontend: rtl/data_memory.v
+Parsing SystemVerilog input from `rtl/data_memory.v' to AST representation.
+Generating RTLIL representation for module `\data_memory'.
+Successfully finished Verilog frontend.
+
+4. Executing Verilog-2005 frontend: rtl/hazard_unit.v
+Parsing SystemVerilog input from `rtl/hazard_unit.v' to AST representation.
+Generating RTLIL representation for module `\hazard_unit'.
+Successfully finished Verilog frontend.
+
+5. Executing Verilog-2005 frontend: rtl/immediate_generator.v
+Parsing SystemVerilog input from `rtl/immediate_generator.v' to AST representation.
+Generating RTLIL representation for module `\immediate_generator'.
+Successfully finished Verilog frontend.
+
+6. Executing Verilog-2005 frontend: rtl/instruction_memory.v
+Parsing SystemVerilog input from `rtl/instruction_memory.v' to AST representation.
+Generating RTLIL representation for module `\instruction_memory'.
+Successfully finished Verilog frontend.
+
+7. Executing Verilog-2005 frontend: rtl/pipeline_registers.v
+Parsing SystemVerilog input from `rtl/pipeline_registers.v' to AST representation.
+Generating RTLIL representation for module `\if_id_register'.
+Generating RTLIL representation for module `\id_exmem_register'.
+Generating RTLIL representation for module `\mem_wb_register'.
+Successfully finished Verilog frontend.
+
+8. Executing Verilog-2005 frontend: rtl/program_counter.v
+Parsing SystemVerilog input from `rtl/program_counter.v' to AST representation.
+Generating RTLIL representation for module `\program_counter'.
+Successfully finished Verilog frontend.
+
+9. Executing Verilog-2005 frontend: rtl/register_file.v
+Parsing SystemVerilog input from `rtl/register_file.v' to AST representation.
+Generating RTLIL representation for module `\register_file'.
+Successfully finished Verilog frontend.
+
+10. Executing Verilog-2005 frontend: rtl/riscv_top.v
+Parsing SystemVerilog input from `rtl/riscv_top.v' to AST representation.
+Generating RTLIL representation for module `\riscv_top'.
+Successfully finished Verilog frontend.
+
+11. Executing HIERARCHY pass (managing design hierarchy).
+
+11.1. Analyzing design hierarchy..
+Top module:  \riscv_top
+Used module:     \mem_wb_register
+Used module:     \data_memory
+Used module:     \alu
+Used module:     \id_exmem_register
+Used module:     \hazard_unit
+Used module:     \immediate_generator
+Used module:     \control_unit
+Used module:     \register_file
+Used module:     \if_id_register
+Used module:     \instruction_memory
+Used module:     \program_counter
+
+11.2. Analyzing design hierarchy..
+Top module:  \riscv_top
+Used module:     \mem_wb_register
+Used module:     \data_memory
+Used module:     \alu
+Used module:     \id_exmem_register
+Used module:     \hazard_unit
+Used module:     \immediate_generator
+Used module:     \control_unit
+Used module:     \register_file
+Used module:     \if_id_register
+Used module:     \instruction_memory
+Used module:     \program_counter
+Removed 0 unused modules.
+
+12. Executing PROC pass (convert processes to netlists).
+
+12.1. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Cleaned up 0 empty switches.
+
+12.2. Executing PROC_RMDEAD pass (remove dead branches from decision trees).
+Marked 1 switch rules as full_case in process $proc$rtl/riscv_top.v:59$1738 in module riscv_top.
+Marked 1 switch rules as full_case in process $proc$rtl/register_file.v:35$1664 in module register_file.
+Marked 1 switch rules as full_case in process $proc$rtl/program_counter.v:10$1617 in module program_counter.
+Marked 1 switch rules as full_case in process $proc$rtl/pipeline_registers.v:149$1616 in module mem_wb_register.
+Marked 1 switch rules as full_case in process $proc$rtl/pipeline_registers.v:81$1615 in module id_exmem_register.
+Marked 2 switch rules as full_case in process $proc$rtl/pipeline_registers.v:20$1614 in module if_id_register.
+Marked 1 switch rules as full_case in process $proc$rtl/immediate_generator.v:10$840 in module immediate_generator.
+Marked 2 switch rules as full_case in process $proc$rtl/hazard_unit.v:12$834 in module hazard_unit.
+Marked 1 switch rules as full_case in process $proc$rtl/data_memory.v:41$319 in module data_memory.
+Marked 5 switch rules as full_case in process $proc$rtl/data_memory.v:24$282 in module data_memory.
+Removed 2 dead cases from process $proc$rtl/control_unit.v:16$14 in module control_unit.
+Marked 4 switch rules as full_case in process $proc$rtl/control_unit.v:16$14 in module control_unit.
+Marked 1 switch rules as full_case in process $proc$rtl/alu.v:19$1 in module alu.
+Removed a total of 2 dead cases.
+
+12.3. Executing PROC_PRUNE pass (remove redundant assignments in processes).
+Removed 7 redundant assignments.
+Promoted 576 assignments to connections.
+
+12.4. Executing PROC_INIT pass (extract init attributes).
+
+12.5. Executing PROC_ARST pass (detect async resets in processes).
+Found async reset \reset in `\program_counter.$proc$rtl/program_counter.v:10$1617'.
+Found async reset \reset in `\mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+Found async reset \reset in `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+Found async reset \reset in `\if_id_register.$proc$rtl/pipeline_registers.v:20$1614'.
+
+12.6. Executing PROC_ROM pass (convert switches to ROMs).
+Converted 0 switches.
+<suppressed ~20 debug messages>
+
+12.7. Executing PROC_MUX pass (convert decision trees to multiplexers).
+Creating decoders for process `\riscv_top.$proc$rtl/riscv_top.v:59$1738'.
+     1/1: $1\branch_taken[0:0]
+Creating decoders for process `\register_file.$proc$rtl/register_file.v:19$1705'.
+Creating decoders for process `\register_file.$proc$rtl/register_file.v:35$1664'.
+     1/3: $1$memwr$\registers$rtl/register_file.v:37$1651_EN[31:0]$1672
+     2/3: $1$memwr$\registers$rtl/register_file.v:37$1651_DATA[31:0]$1671
+     3/3: $1$memwr$\registers$rtl/register_file.v:37$1651_ADDR[4:0]$1670
+Creating decoders for process `\program_counter.$proc$rtl/program_counter.v:10$1617'.
+     1/1: $0\pc[31:0]
+Creating decoders for process `\mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+     1/7: $0\jump_out[0:0]
+     2/7: $0\mem_to_reg_out[0:0]
+     3/7: $0\reg_write_out[0:0]
+     4/7: $0\rd_out[4:0]
+     5/7: $0\memory_data_out[31:0]
+     6/7: $0\alu_result_out[31:0]
+     7/7: $0\pc_out[31:0]
+Creating decoders for process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+     1/14: $0\alu_control_out[3:0]
+     2/14: $0\jump_out[0:0]
+     3/14: $0\alu_src_out[0:0]
+     4/14: $0\mem_to_reg_out[0:0]
+     5/14: $0\mem_write_out[0:0]
+     6/14: $0\mem_read_out[0:0]
+     7/14: $0\reg_write_out[0:0]
+     8/14: $0\rd_out[4:0]
+     9/14: $0\rs2_out[4:0]
+    10/14: $0\rs1_out[4:0]
+    11/14: $0\immediate_out[31:0]
+    12/14: $0\operand_b_out[31:0]
+    13/14: $0\operand_a_out[31:0]
+    14/14: $0\pc_out[31:0]
+Creating decoders for process `\if_id_register.$proc$rtl/pipeline_registers.v:20$1614'.
+     1/2: $0\instruction_out[31:0]
+     2/2: $0\pc_out[31:0]
+Creating decoders for process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+Creating decoders for process `\instruction_memory.$proc$rtl/instruction_memory.v:22$1098'.
+Creating decoders for process `\immediate_generator.$proc$rtl/immediate_generator.v:10$840'.
+     1/1: $1\immediate[31:0]
+Creating decoders for process `\hazard_unit.$proc$rtl/hazard_unit.v:12$834'.
+     1/2: $2\stall[0:0]
+     2/2: $1\stall[0:0]
+Creating decoders for process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+Creating decoders for process `\data_memory.$proc$rtl/data_memory.v:41$319'.
+     1/1: $1\read_data[31:0]
+Creating decoders for process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+     1/24: $2$memwr$\mem$rtl/data_memory.v:36$281_EN[31:0]$318
+     2/24: $2$memwr$\mem$rtl/data_memory.v:36$281_DATA[31:0]$317
+     3/24: $2$memwr$\mem$rtl/data_memory.v:36$281_ADDR[7:0]$316
+     4/24: $2$memwr$\mem$rtl/data_memory.v:33$280_EN[31:0]$315
+     5/24: $2$memwr$\mem$rtl/data_memory.v:33$280_DATA[31:0]$314
+     6/24: $2$memwr$\mem$rtl/data_memory.v:33$280_ADDR[7:0]$313
+     7/24: $2$memwr$\mem$rtl/data_memory.v:30$279_EN[31:0]$312
+     8/24: $2$memwr$\mem$rtl/data_memory.v:30$279_DATA[31:0]$311
+     9/24: $2$memwr$\mem$rtl/data_memory.v:30$279_ADDR[7:0]$310
+    10/24: $2$memwr$\mem$rtl/data_memory.v:27$278_EN[31:0]$309
+    11/24: $2$memwr$\mem$rtl/data_memory.v:27$278_DATA[31:0]$308
+    12/24: $2$memwr$\mem$rtl/data_memory.v:27$278_ADDR[7:0]$307
+    13/24: $1$memwr$\mem$rtl/data_memory.v:36$281_EN[31:0]$306
+    14/24: $1$memwr$\mem$rtl/data_memory.v:36$281_DATA[31:0]$305
+    15/24: $1$memwr$\mem$rtl/data_memory.v:36$281_ADDR[7:0]$304
+    16/24: $1$memwr$\mem$rtl/data_memory.v:33$280_EN[31:0]$303
+    17/24: $1$memwr$\mem$rtl/data_memory.v:33$280_DATA[31:0]$302
+    18/24: $1$memwr$\mem$rtl/data_memory.v:33$280_ADDR[7:0]$301
+    19/24: $1$memwr$\mem$rtl/data_memory.v:30$279_EN[31:0]$300
+    20/24: $1$memwr$\mem$rtl/data_memory.v:30$279_DATA[31:0]$299
+    21/24: $1$memwr$\mem$rtl/data_memory.v:30$279_ADDR[7:0]$298
+    22/24: $1$memwr$\mem$rtl/data_memory.v:27$278_EN[31:0]$297
+    23/24: $1$memwr$\mem$rtl/data_memory.v:27$278_DATA[31:0]$296
+    24/24: $1$memwr$\mem$rtl/data_memory.v:27$278_ADDR[7:0]$295
+Creating decoders for process `\control_unit.$proc$rtl/control_unit.v:16$14'.
+     1/11: $4\alu_control[3:0]
+     2/11: $3\alu_control[3:0]
+     3/11: $2\alu_control[3:0]
+     4/11: $1\alu_control[3:0]
+     5/11: $1\reg_write[0:0]
+     6/11: $1\jump[0:0]
+     7/11: $1\branch[0:0]
+     8/11: $1\alu_src[0:0]
+     9/11: $1\mem_to_reg[0:0]
+    10/11: $1\mem_write[0:0]
+    11/11: $1\mem_read[0:0]
+Creating decoders for process `\alu.$proc$rtl/alu.v:19$1'.
+     1/1: $1\result[31:0]
+
+12.8. Executing PROC_DLATCH pass (convert process syncs to latches).
+No latch inferred for signal `\riscv_top.\branch_taken' from process `\riscv_top.$proc$rtl/riscv_top.v:59$1738'.
+No latch inferred for signal `\register_file.\i' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1619_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1620_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1621_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1622_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1623_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1624_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1625_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1626_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1627_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1628_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1629_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1630_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1631_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1632_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1633_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1634_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1635_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1636_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1637_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1638_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1639_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1640_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1641_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1642_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1643_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1644_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1645_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1646_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1647_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1648_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1649_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\register_file.$memwr$\registers$rtl/register_file.v:21$1650_EN' from process `\register_file.$proc$rtl/register_file.v:19$1705'.
+No latch inferred for signal `\instruction_memory.\i' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$842_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$843_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$844_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$845_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$846_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$847_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$848_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$849_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$850_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$851_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$852_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$853_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$854_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$855_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$856_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$857_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$858_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$859_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$860_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$861_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$862_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$863_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$864_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$865_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$866_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$867_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$868_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$869_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$870_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$871_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$872_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$873_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$874_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$875_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$876_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$877_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$878_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$879_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$880_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$881_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$882_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$883_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$884_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$885_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$886_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$887_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$888_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$889_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$890_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$891_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$892_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$893_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$894_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$895_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$896_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$897_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$898_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$899_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$900_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$901_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$902_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$903_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$904_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$905_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$906_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$907_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$908_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$909_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$910_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$911_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$912_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$913_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$914_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$915_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$916_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$917_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$918_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$919_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$920_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$921_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$922_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$923_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$924_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$925_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$926_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$927_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$928_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$929_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$930_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$931_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$932_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$933_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$934_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$935_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$936_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$937_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$938_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$939_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$940_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$941_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$942_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$943_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$944_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$945_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$946_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$947_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$948_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$949_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$950_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$951_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$952_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$953_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$954_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$955_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$956_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$957_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$958_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$959_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$960_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$961_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$962_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$963_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$964_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$965_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$966_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$967_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$968_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$969_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$970_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$971_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$972_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$973_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$974_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$975_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$976_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$977_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$978_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$979_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$980_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$981_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$982_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$983_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$984_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$985_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$986_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$987_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$988_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$989_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$990_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$991_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$992_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$993_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$994_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$995_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$996_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$997_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$998_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$999_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1000_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1001_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1002_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1003_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1004_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1005_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1006_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1007_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1008_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1009_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1010_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1011_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1012_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1013_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1014_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1015_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1016_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1017_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1018_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1019_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1020_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1021_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1022_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1023_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1024_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1025_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1026_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1027_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1028_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1029_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1030_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1031_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1032_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1033_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1034_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1035_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1036_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1037_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1038_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1039_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1040_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1041_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1042_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1043_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1044_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1045_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1046_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1047_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1048_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1049_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1050_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1051_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1052_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1053_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1054_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1055_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1056_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1057_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1058_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1059_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1060_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1061_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1062_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1063_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1064_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1065_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1066_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1067_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1068_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1069_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1070_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1071_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1072_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1073_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1074_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1075_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1076_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1077_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1078_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1079_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1080_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1081_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1082_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1083_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1084_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1085_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1086_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1087_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1088_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1089_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1090_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1091_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1092_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1093_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1094_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1095_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1096_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.$memwr$\mem$rtl/instruction_memory.v:14$1097_EN' from process `\instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+No latch inferred for signal `\instruction_memory.\instruction' from process `\instruction_memory.$proc$rtl/instruction_memory.v:22$1098'.
+No latch inferred for signal `\immediate_generator.\immediate' from process `\immediate_generator.$proc$rtl/immediate_generator.v:10$840'.
+No latch inferred for signal `\hazard_unit.\stall' from process `\hazard_unit.$proc$rtl/hazard_unit.v:12$834'.
+No latch inferred for signal `\data_memory.\i' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$22_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$23_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$24_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$25_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$26_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$27_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$28_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$29_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$30_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$31_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$32_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$33_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$34_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$35_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$36_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$37_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$38_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$39_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$40_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$41_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$42_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$43_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$44_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$45_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$46_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$47_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$48_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$49_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$50_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$51_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$52_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$53_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$54_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$55_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$56_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$57_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$58_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$59_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$60_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$61_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$62_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$63_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$64_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$65_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$66_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$67_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$68_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$69_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$70_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$71_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$72_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$73_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$74_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$75_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$76_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$77_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$78_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$79_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$80_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$81_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$82_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$83_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$84_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$85_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$86_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$87_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$88_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$89_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$90_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$91_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$92_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$93_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$94_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$95_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$96_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$97_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$98_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$99_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$100_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$101_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$102_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$103_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$104_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$105_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$106_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$107_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$108_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$109_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$110_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$111_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$112_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$113_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$114_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$115_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$116_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$117_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$118_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$119_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$120_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$121_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$122_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$123_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$124_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$125_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$126_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$127_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$128_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$129_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$130_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$131_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$132_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$133_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$134_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$135_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$136_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$137_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$138_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$139_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$140_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$141_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$142_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$143_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$144_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$145_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$146_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$147_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$148_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$149_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$150_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$151_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$152_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$153_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$154_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$155_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$156_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$157_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$158_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$159_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$160_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$161_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$162_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$163_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$164_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$165_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$166_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$167_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$168_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$169_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$170_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$171_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$172_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$173_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$174_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$175_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$176_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$177_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$178_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$179_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$180_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$181_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$182_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$183_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$184_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$185_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$186_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$187_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$188_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$189_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$190_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$191_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$192_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$193_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$194_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$195_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$196_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$197_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$198_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$199_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$200_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$201_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$202_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$203_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$204_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$205_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$206_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$207_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$208_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$209_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$210_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$211_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$212_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$213_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$214_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$215_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$216_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$217_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$218_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$219_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$220_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$221_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$222_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$223_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$224_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$225_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$226_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$227_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$228_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$229_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$230_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$231_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$232_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$233_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$234_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$235_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$236_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$237_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$238_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$239_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$240_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$241_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$242_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$243_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$244_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$245_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$246_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$247_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$248_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$249_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$250_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$251_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$252_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$253_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$254_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$255_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$256_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$257_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$258_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$259_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$260_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$261_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$262_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$263_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$264_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$265_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$266_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$267_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$268_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$269_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$270_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$271_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$272_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$273_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$274_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$275_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$276_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:20$277_EN' from process `\data_memory.$proc$rtl/data_memory.v:18$577'.
+No latch inferred for signal `\data_memory.\read_data' from process `\data_memory.$proc$rtl/data_memory.v:41$319'.
+No latch inferred for signal `\control_unit.\alu_control' from process `\control_unit.$proc$rtl/control_unit.v:16$14'.
+No latch inferred for signal `\control_unit.\reg_write' from process `\control_unit.$proc$rtl/control_unit.v:16$14'.
+No latch inferred for signal `\control_unit.\mem_read' from process `\control_unit.$proc$rtl/control_unit.v:16$14'.
+No latch inferred for signal `\control_unit.\mem_write' from process `\control_unit.$proc$rtl/control_unit.v:16$14'.
+No latch inferred for signal `\control_unit.\mem_to_reg' from process `\control_unit.$proc$rtl/control_unit.v:16$14'.
+No latch inferred for signal `\control_unit.\alu_src' from process `\control_unit.$proc$rtl/control_unit.v:16$14'.
+No latch inferred for signal `\control_unit.\branch' from process `\control_unit.$proc$rtl/control_unit.v:16$14'.
+No latch inferred for signal `\control_unit.\jump' from process `\control_unit.$proc$rtl/control_unit.v:16$14'.
+No latch inferred for signal `\alu.\result' from process `\alu.$proc$rtl/alu.v:19$1'.
+
+12.9. Executing PROC_DFF pass (convert process syncs to FFs).
+Creating register for signal `\register_file.$memwr$\registers$rtl/register_file.v:37$1651_ADDR' using process `\register_file.$proc$rtl/register_file.v:35$1664'.
+  created $dff cell `$procdff$2074' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$rtl/register_file.v:37$1651_DATA' using process `\register_file.$proc$rtl/register_file.v:35$1664'.
+  created $dff cell `$procdff$2075' with positive edge clock.
+Creating register for signal `\register_file.$memwr$\registers$rtl/register_file.v:37$1651_EN' using process `\register_file.$proc$rtl/register_file.v:35$1664'.
+  created $dff cell `$procdff$2076' with positive edge clock.
+Creating register for signal `\program_counter.\pc' using process `\program_counter.$proc$rtl/program_counter.v:10$1617'.
+  created $adff cell `$procdff$2079' with positive edge clock and positive level reset.
+Creating register for signal `\mem_wb_register.\pc_out' using process `\mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+  created $adff cell `$procdff$2082' with positive edge clock and positive level reset.
+Creating register for signal `\mem_wb_register.\rd_out' using process `\mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+  created $adff cell `$procdff$2085' with positive edge clock and positive level reset.
+Creating register for signal `\mem_wb_register.\reg_write_out' using process `\mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+  created $adff cell `$procdff$2088' with positive edge clock and positive level reset.
+Creating register for signal `\mem_wb_register.\mem_to_reg_out' using process `\mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+  created $adff cell `$procdff$2091' with positive edge clock and positive level reset.
+Creating register for signal `\mem_wb_register.\jump_out' using process `\mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+  created $adff cell `$procdff$2094' with positive edge clock and positive level reset.
+Creating register for signal `\mem_wb_register.\alu_result_out' using process `\mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+  created $adff cell `$procdff$2097' with positive edge clock and positive level reset.
+Creating register for signal `\mem_wb_register.\memory_data_out' using process `\mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+  created $adff cell `$procdff$2100' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\pc_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2103' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\operand_a_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2106' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\operand_b_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2109' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\immediate_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2112' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\rs1_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2115' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\rs2_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2118' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\rd_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2121' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\reg_write_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2124' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\mem_read_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2127' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\mem_write_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2130' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\mem_to_reg_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2133' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\alu_src_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2136' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\jump_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2139' with positive edge clock and positive level reset.
+Creating register for signal `\id_exmem_register.\alu_control_out' using process `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+  created $adff cell `$procdff$2142' with positive edge clock and positive level reset.
+Creating register for signal `\if_id_register.\pc_out' using process `\if_id_register.$proc$rtl/pipeline_registers.v:20$1614'.
+  created $adff cell `$procdff$2145' with positive edge clock and positive level reset.
+Creating register for signal `\if_id_register.\instruction_out' using process `\if_id_register.$proc$rtl/pipeline_registers.v:20$1614'.
+  created $adff cell `$procdff$2148' with positive edge clock and positive level reset.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:27$278_ADDR' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2149' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:27$278_DATA' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2150' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:27$278_EN' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2151' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:30$279_ADDR' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2152' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:30$279_DATA' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2153' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:30$279_EN' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2154' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:33$280_ADDR' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2155' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:33$280_DATA' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2156' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:33$280_EN' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2157' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:36$281_ADDR' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2158' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:36$281_DATA' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2159' with positive edge clock.
+Creating register for signal `\data_memory.$memwr$\mem$rtl/data_memory.v:36$281_EN' using process `\data_memory.$proc$rtl/data_memory.v:24$282'.
+  created $dff cell `$procdff$2160' with positive edge clock.
+
+12.10. Executing PROC_MEMWR pass (convert process memory writes to cells).
+
+12.11. Executing PROC_CLEAN pass (remove empty switches from decision trees).
+Found and cleaned up 1 empty switch in `\riscv_top.$proc$rtl/riscv_top.v:59$1738'.
+Removing empty process `riscv_top.$proc$rtl/riscv_top.v:59$1738'.
+Removing empty process `register_file.$proc$rtl/register_file.v:19$1705'.
+Found and cleaned up 1 empty switch in `\register_file.$proc$rtl/register_file.v:35$1664'.
+Removing empty process `register_file.$proc$rtl/register_file.v:35$1664'.
+Found and cleaned up 1 empty switch in `\program_counter.$proc$rtl/program_counter.v:10$1617'.
+Removing empty process `program_counter.$proc$rtl/program_counter.v:10$1617'.
+Removing empty process `mem_wb_register.$proc$rtl/pipeline_registers.v:149$1616'.
+Found and cleaned up 1 empty switch in `\id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+Removing empty process `id_exmem_register.$proc$rtl/pipeline_registers.v:81$1615'.
+Found and cleaned up 2 empty switches in `\if_id_register.$proc$rtl/pipeline_registers.v:20$1614'.
+Removing empty process `if_id_register.$proc$rtl/pipeline_registers.v:20$1614'.
+Removing empty process `instruction_memory.$proc$rtl/instruction_memory.v:12$1357'.
+Removing empty process `instruction_memory.$proc$rtl/instruction_memory.v:22$1098'.
+Found and cleaned up 1 empty switch in `\immediate_generator.$proc$rtl/immediate_generator.v:10$840'.
+Removing empty process `immediate_generator.$proc$rtl/immediate_generator.v:10$840'.
+Found and cleaned up 2 empty switches in `\hazard_unit.$proc$rtl/hazard_unit.v:12$834'.
+Removing empty process `hazard_unit.$proc$rtl/hazard_unit.v:12$834'.
+Removing empty process `data_memory.$proc$rtl/data_memory.v:18$577'.
+Found and cleaned up 1 empty switch in `\data_memory.$proc$rtl/data_memory.v:41$319'.
+Removing empty process `data_memory.$proc$rtl/data_memory.v:41$319'.
+Found and cleaned up 5 empty switches in `\data_memory.$proc$rtl/data_memory.v:24$282'.
+Removing empty process `data_memory.$proc$rtl/data_memory.v:24$282'.
+Found and cleaned up 4 empty switches in `\control_unit.$proc$rtl/control_unit.v:16$14'.
+Removing empty process `control_unit.$proc$rtl/control_unit.v:16$14'.
+Found and cleaned up 1 empty switch in `\alu.$proc$rtl/alu.v:19$1'.
+Removing empty process `alu.$proc$rtl/alu.v:19$1'.
+Cleaned up 20 empty switches.
+
+12.12. Executing OPT_EXPR pass (perform const folding).
+Optimizing module riscv_top.
+<suppressed ~6 debug messages>
+Optimizing module register_file.
+<suppressed ~3 debug messages>
+Optimizing module program_counter.
+<suppressed ~1 debug messages>
+Optimizing module mem_wb_register.
+<suppressed ~7 debug messages>
+Optimizing module id_exmem_register.
+<suppressed ~14 debug messages>
+Optimizing module if_id_register.
+<suppressed ~2 debug messages>
+Optimizing module instruction_memory.
+Optimizing module immediate_generator.
+Optimizing module hazard_unit.
+<suppressed ~1 debug messages>
+Optimizing module data_memory.
+Optimizing module control_unit.
+<suppressed ~2 debug messages>
+Optimizing module alu.
+<suppressed ~1 debug messages>
+
+13. Executing OPT pass (performing simple optimizations).
+
+13.1. Executing OPT_EXPR pass (perform const folding).
+Optimizing module riscv_top.
+Optimizing module register_file.
+Optimizing module program_counter.
+Optimizing module mem_wb_register.
+Optimizing module id_exmem_register.
+Optimizing module if_id_register.
+Optimizing module instruction_memory.
+Optimizing module immediate_generator.
+Optimizing module hazard_unit.
+Optimizing module data_memory.
+Optimizing module control_unit.
+Optimizing module alu.
+
+13.2. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\riscv_top'.
+Computing hashes of 63 cells of `\riscv_top'.
+Finding duplicate cells in `\riscv_top'.
+Computing hashes of 59 cells of `\riscv_top'.
+Finding duplicate cells in `\riscv_top'.
+Computing hashes of 57 cells of `\riscv_top'.
+Finding duplicate cells in `\riscv_top'.
+<suppressed ~18 debug messages>
+Finding identical cells in module `\register_file'.
+Computing hashes of 53 cells of `\register_file'.
+Finding duplicate cells in `\register_file'.
+Finding identical cells in module `\program_counter'.
+Computing hashes of 2 cells of `\program_counter'.
+Finding duplicate cells in `\program_counter'.
+Finding identical cells in module `\mem_wb_register'.
+Computing hashes of 7 cells of `\mem_wb_register'.
+Finding duplicate cells in `\mem_wb_register'.
+Finding identical cells in module `\id_exmem_register'.
+Computing hashes of 28 cells of `\id_exmem_register'.
+Finding duplicate cells in `\id_exmem_register'.
+Finding identical cells in module `\if_id_register'.
+Computing hashes of 6 cells of `\if_id_register'.
+Finding duplicate cells in `\if_id_register'.
+Finding identical cells in module `\instruction_memory'.
+Computing hashes of 258 cells of `\instruction_memory'.
+Finding duplicate cells in `\instruction_memory'.
+Finding identical cells in module `\immediate_generator'.
+Computing hashes of 11 cells of `\immediate_generator'.
+Finding duplicate cells in `\immediate_generator'.
+Finding identical cells in module `\hazard_unit'.
+Computing hashes of 8 cells of `\hazard_unit'.
+Finding duplicate cells in `\hazard_unit'.
+Finding identical cells in module `\data_memory'.
+Computing hashes of 310 cells of `\data_memory'.
+Finding duplicate cells in `\data_memory'.
+Finding identical cells in module `\control_unit'.
+Computing hashes of 63 cells of `\control_unit'.
+Finding duplicate cells in `\control_unit'.
+Computing hashes of 35 cells of `\control_unit'.
+Finding duplicate cells in `\control_unit'.
+<suppressed ~84 debug messages>
+Finding identical cells in module `\alu'.
+Computing hashes of 23 cells of `\alu'.
+Finding duplicate cells in `\alu'.
+Removed a total of 34 cells.
+
+13.3. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \riscv_top..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \program_counter..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \mem_wb_register..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \id_exmem_register..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \if_id_register..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \instruction_memory..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$1853.
+Running muxtree optimizer on module \data_memory..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$1931.
+    dead port 2/2 on $mux $procmux$1925.
+    dead port 2/2 on $mux $procmux$1919.
+    dead port 2/2 on $mux $procmux$1913.
+    dead port 2/2 on $mux $procmux$1907.
+    dead port 2/2 on $mux $procmux$1901.
+    dead port 2/2 on $mux $procmux$1895.
+    dead port 2/2 on $mux $procmux$1889.
+    dead port 2/2 on $mux $procmux$1883.
+    dead port 2/2 on $mux $procmux$1877.
+    dead port 2/2 on $mux $procmux$1871.
+    dead port 2/2 on $mux $procmux$1865.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+    dead port 2/2 on $mux $procmux$1993.
+    dead port 2/2 on $mux $procmux$1976.
+    dead port 2/2 on $mux $procmux$2011.
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 16 multiplexer ports.
+<suppressed ~164 debug messages>
+
+13.4. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \riscv_top.
+  Optimizing cells in module \register_file.
+    Consolidated identical input bits for $mux cell $procmux$1794:
+      Old ports: A=0, B=32'11111111111111111111111111111111, Y=$procmux$1794_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$1794_Y [0]
+      New connections: $procmux$1794_Y [31:1] = { $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] $procmux$1794_Y [0] }
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \program_counter.
+  Optimizing cells in module \mem_wb_register.
+  Optimizing cells in module \id_exmem_register.
+  Optimizing cells in module \if_id_register.
+  Optimizing cells in module \instruction_memory.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \hazard_unit.
+  Optimizing cells in module \data_memory.
+    Consolidated identical input bits for $mux cell $procmux$1917:
+      Old ports: A=0, B=255, Y=$procmux$1917_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$1917_Y [0]
+      New connections: $procmux$1917_Y [31:1] = { 24'000000000000000000000000 $procmux$1917_Y [0] $procmux$1917_Y [0] $procmux$1917_Y [0] $procmux$1917_Y [0] $procmux$1917_Y [0] $procmux$1917_Y [0] $procmux$1917_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$1899:
+      Old ports: A=0, B=65280, Y=$procmux$1899_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$1899_Y [8]
+      New connections: { $procmux$1899_Y [31:9] $procmux$1899_Y [7:0] } = { 16'0000000000000000 $procmux$1899_Y [8] $procmux$1899_Y [8] $procmux$1899_Y [8] $procmux$1899_Y [8] $procmux$1899_Y [8] $procmux$1899_Y [8] $procmux$1899_Y [8] 8'00000000 }
+    Consolidated identical input bits for $mux cell $procmux$1881:
+      Old ports: A=0, B=16711680, Y=$procmux$1881_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$1881_Y [16]
+      New connections: { $procmux$1881_Y [31:17] $procmux$1881_Y [15:0] } = { 8'00000000 $procmux$1881_Y [16] $procmux$1881_Y [16] $procmux$1881_Y [16] $procmux$1881_Y [16] $procmux$1881_Y [16] $procmux$1881_Y [16] $procmux$1881_Y [16] 16'0000000000000000 }
+    Consolidated identical input bits for $mux cell $procmux$1863:
+      Old ports: A=0, B=32'11111111000000000000000000000000, Y=$procmux$1863_Y
+      New ports: A=1'0, B=1'1, Y=$procmux$1863_Y [24]
+      New connections: { $procmux$1863_Y [31:25] $procmux$1863_Y [23:0] } = { $procmux$1863_Y [24] $procmux$1863_Y [24] $procmux$1863_Y [24] $procmux$1863_Y [24] $procmux$1863_Y [24] $procmux$1863_Y [24] $procmux$1863_Y [24] 24'000000000000000000000000 }
+  Optimizing cells in module \data_memory.
+    Consolidated identical input bits for $mux cell $procmux$1961:
+      Old ports: A=0, B=$2$memwr$\mem$rtl/data_memory.v:27$278_EN[31:0]$309, Y=$procmux$1961_Y
+      New ports: A=1'0, B=$procmux$1917_Y [0], Y=$procmux$1961_Y [0]
+      New connections: $procmux$1961_Y [31:1] = { 24'000000000000000000000000 $procmux$1961_Y [0] $procmux$1961_Y [0] $procmux$1961_Y [0] $procmux$1961_Y [0] $procmux$1961_Y [0] $procmux$1961_Y [0] $procmux$1961_Y [0] }
+    Consolidated identical input bits for $mux cell $procmux$1952:
+      Old ports: A=0, B=$2$memwr$\mem$rtl/data_memory.v:30$279_EN[31:0]$312, Y=$procmux$1952_Y
+      New ports: A=1'0, B=$procmux$1899_Y [8], Y=$procmux$1952_Y [8]
+      New connections: { $procmux$1952_Y [31:9] $procmux$1952_Y [7:0] } = { 16'0000000000000000 $procmux$1952_Y [8] $procmux$1952_Y [8] $procmux$1952_Y [8] $procmux$1952_Y [8] $procmux$1952_Y [8] $procmux$1952_Y [8] $procmux$1952_Y [8] 8'00000000 }
+    Consolidated identical input bits for $mux cell $procmux$1943:
+      Old ports: A=0, B=$2$memwr$\mem$rtl/data_memory.v:33$280_EN[31:0]$315, Y=$procmux$1943_Y
+      New ports: A=1'0, B=$procmux$1881_Y [16], Y=$procmux$1943_Y [16]
+      New connections: { $procmux$1943_Y [31:17] $procmux$1943_Y [15:0] } = { 8'00000000 $procmux$1943_Y [16] $procmux$1943_Y [16] $procmux$1943_Y [16] $procmux$1943_Y [16] $procmux$1943_Y [16] $procmux$1943_Y [16] $procmux$1943_Y [16] 16'0000000000000000 }
+    Consolidated identical input bits for $mux cell $procmux$1934:
+      Old ports: A=0, B=$2$memwr$\mem$rtl/data_memory.v:36$281_EN[31:0]$318, Y=$procmux$1934_Y
+      New ports: A=1'0, B=$procmux$1863_Y [24], Y=$procmux$1934_Y [24]
+      New connections: { $procmux$1934_Y [31:25] $procmux$1934_Y [23:0] } = { $procmux$1934_Y [24] $procmux$1934_Y [24] $procmux$1934_Y [24] $procmux$1934_Y [24] $procmux$1934_Y [24] $procmux$1934_Y [24] $procmux$1934_Y [24] 24'000000000000000000000000 }
+  Optimizing cells in module \data_memory.
+  Optimizing cells in module \control_unit.
+    New ctrl vector for $pmux cell $procmux$2028: $auto$opt_reduce.cc:137:opt_pmux$2167
+    New ctrl vector for $pmux cell $procmux$2021: $auto$opt_reduce.cc:137:opt_pmux$2169
+    New ctrl vector for $pmux cell $procmux$2037: $auto$opt_reduce.cc:137:opt_pmux$2171
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \alu.
+Performed a total of 12 changes.
+
+13.5. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\riscv_top'.
+Computing hashes of 57 cells of `\riscv_top'.
+Finding duplicate cells in `\riscv_top'.
+Finding identical cells in module `\register_file'.
+Computing hashes of 53 cells of `\register_file'.
+Finding duplicate cells in `\register_file'.
+Finding identical cells in module `\program_counter'.
+Computing hashes of 2 cells of `\program_counter'.
+Finding duplicate cells in `\program_counter'.
+Finding identical cells in module `\mem_wb_register'.
+Computing hashes of 7 cells of `\mem_wb_register'.
+Finding duplicate cells in `\mem_wb_register'.
+Finding identical cells in module `\id_exmem_register'.
+Computing hashes of 28 cells of `\id_exmem_register'.
+Finding duplicate cells in `\id_exmem_register'.
+Finding identical cells in module `\if_id_register'.
+Computing hashes of 6 cells of `\if_id_register'.
+Finding duplicate cells in `\if_id_register'.
+Finding identical cells in module `\instruction_memory'.
+Computing hashes of 258 cells of `\instruction_memory'.
+Finding duplicate cells in `\instruction_memory'.
+Finding identical cells in module `\immediate_generator'.
+Computing hashes of 11 cells of `\immediate_generator'.
+Finding duplicate cells in `\immediate_generator'.
+Finding identical cells in module `\hazard_unit'.
+Computing hashes of 7 cells of `\hazard_unit'.
+Finding duplicate cells in `\hazard_unit'.
+Finding identical cells in module `\data_memory'.
+Computing hashes of 298 cells of `\data_memory'.
+Finding duplicate cells in `\data_memory'.
+Finding identical cells in module `\control_unit'.
+Computing hashes of 35 cells of `\control_unit'.
+Finding duplicate cells in `\control_unit'.
+Computing hashes of 33 cells of `\control_unit'.
+Finding duplicate cells in `\control_unit'.
+<suppressed ~6 debug messages>
+Finding identical cells in module `\alu'.
+Computing hashes of 23 cells of `\alu'.
+Finding duplicate cells in `\alu'.
+Removed a total of 2 cells.
+
+13.6. Executing OPT_DFF pass (perform DFF optimizations).
+Adding EN signal on $procdff$2079 ($adff) from module program_counter (D = \next_pc, Q = \pc).
+Adding EN signal on $procdff$2133 ($adff) from module id_exmem_register (D = \mem_to_reg_in, Q = \mem_to_reg_out).
+Adding EN signal on $procdff$2103 ($adff) from module id_exmem_register (D = \pc_in, Q = \pc_out).
+Adding EN signal on $procdff$2124 ($adff) from module id_exmem_register (D = \reg_write_in, Q = \reg_write_out).
+Adding EN signal on $procdff$2106 ($adff) from module id_exmem_register (D = \operand_a_in, Q = \operand_a_out).
+Adding EN signal on $procdff$2139 ($adff) from module id_exmem_register (D = \jump_in, Q = \jump_out).
+Adding EN signal on $procdff$2109 ($adff) from module id_exmem_register (D = \operand_b_in, Q = \operand_b_out).
+Adding EN signal on $procdff$2127 ($adff) from module id_exmem_register (D = \mem_read_in, Q = \mem_read_out).
+Adding EN signal on $procdff$2112 ($adff) from module id_exmem_register (D = \immediate_in, Q = \immediate_out).
+Adding EN signal on $procdff$2136 ($adff) from module id_exmem_register (D = \alu_src_in, Q = \alu_src_out).
+Adding EN signal on $procdff$2115 ($adff) from module id_exmem_register (D = \rs1_in, Q = \rs1_out).
+Adding EN signal on $procdff$2130 ($adff) from module id_exmem_register (D = \mem_write_in, Q = \mem_write_out).
+Adding EN signal on $procdff$2118 ($adff) from module id_exmem_register (D = \rs2_in, Q = \rs2_out).
+Adding EN signal on $procdff$2142 ($adff) from module id_exmem_register (D = \alu_control_in, Q = \alu_control_out).
+Adding EN signal on $procdff$2121 ($adff) from module id_exmem_register (D = \rd_in, Q = \rd_out).
+Adding EN signal on $procdff$2148 ($adff) from module if_id_register (D = $procmux$1835_Y, Q = \instruction_out).
+Adding EN signal on $procdff$2145 ($adff) from module if_id_register (D = $procmux$1840_Y, Q = \pc_out).
+Setting constant 0-bit at position 8 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 9 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 10 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 11 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 12 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 13 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 14 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 15 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 16 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 17 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 18 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 19 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 20 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 21 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 22 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 23 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 24 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 25 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 26 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 27 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 28 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 29 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 30 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 31 on $procdff$2151 ($dff) from module data_memory.
+Setting constant 0-bit at position 0 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 1 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 2 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 3 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 4 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 5 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 6 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 7 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 8 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 9 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 10 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 11 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 12 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 13 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 14 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 15 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 16 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 17 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 18 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 19 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 20 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 21 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 22 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 23 on $procdff$2160 ($dff) from module data_memory.
+Setting constant 0-bit at position 0 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 1 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 2 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 3 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 4 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 5 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 6 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 7 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 8 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 9 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 10 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 11 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 12 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 13 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 14 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 15 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 24 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 25 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 26 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 27 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 28 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 29 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 30 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 31 on $procdff$2157 ($dff) from module data_memory.
+Setting constant 0-bit at position 0 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 1 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 2 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 3 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 4 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 5 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 6 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 7 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 16 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 17 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 18 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 19 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 20 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 21 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 22 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 23 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 24 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 25 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 26 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 27 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 28 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 29 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 30 on $procdff$2154 ($dff) from module data_memory.
+Setting constant 0-bit at position 31 on $procdff$2154 ($dff) from module data_memory.
+
+13.7. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \riscv_top..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \program_counter..
+Finding unused cells or wires in module \mem_wb_register..
+Finding unused cells or wires in module \id_exmem_register..
+Finding unused cells or wires in module \if_id_register..
+Finding unused cells or wires in module \instruction_memory..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \hazard_unit..
+Finding unused cells or wires in module \data_memory..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \alu..
+Removed 87 unused cells and 1472 unused wires.
+<suppressed ~154 debug messages>
+
+13.8. Executing OPT_EXPR pass (perform const folding).
+Optimizing module riscv_top.
+Optimizing module register_file.
+Optimizing module program_counter.
+Optimizing module mem_wb_register.
+Optimizing module id_exmem_register.
+Optimizing module if_id_register.
+<suppressed ~2 debug messages>
+Optimizing module instruction_memory.
+Optimizing module immediate_generator.
+Optimizing module hazard_unit.
+Optimizing module data_memory.
+Optimizing module control_unit.
+Optimizing module alu.
+
+13.9. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.10. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \riscv_top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \program_counter..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \mem_wb_register..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \id_exmem_register..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \if_id_register..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \instruction_memory..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \data_memory..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~87 debug messages>
+
+13.11. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \riscv_top.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \program_counter.
+  Optimizing cells in module \mem_wb_register.
+  Optimizing cells in module \id_exmem_register.
+  Optimizing cells in module \if_id_register.
+  Optimizing cells in module \instruction_memory.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \hazard_unit.
+  Optimizing cells in module \data_memory.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \alu.
+Performed a total of 0 changes.
+
+13.12. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\riscv_top'.
+Computing hashes of 0 cells of `\riscv_top'.
+Finding duplicate cells in `\riscv_top'.
+Finding identical cells in module `\register_file'.
+Computing hashes of 50 cells of `\register_file'.
+Finding duplicate cells in `\register_file'.
+Finding identical cells in module `\program_counter'.
+Computing hashes of 1 cells of `\program_counter'.
+Finding duplicate cells in `\program_counter'.
+Finding identical cells in module `\mem_wb_register'.
+Computing hashes of 7 cells of `\mem_wb_register'.
+Finding duplicate cells in `\mem_wb_register'.
+Finding identical cells in module `\id_exmem_register'.
+Computing hashes of 14 cells of `\id_exmem_register'.
+Finding duplicate cells in `\id_exmem_register'.
+Finding identical cells in module `\if_id_register'.
+Computing hashes of 8 cells of `\if_id_register'.
+Finding duplicate cells in `\if_id_register'.
+Computing hashes of 7 cells of `\if_id_register'.
+Finding duplicate cells in `\if_id_register'.
+<suppressed ~3 debug messages>
+Finding identical cells in module `\instruction_memory'.
+Computing hashes of 258 cells of `\instruction_memory'.
+Finding duplicate cells in `\instruction_memory'.
+Finding identical cells in module `\immediate_generator'.
+Computing hashes of 11 cells of `\immediate_generator'.
+Finding duplicate cells in `\immediate_generator'.
+Finding identical cells in module `\hazard_unit'.
+Computing hashes of 7 cells of `\hazard_unit'.
+Finding duplicate cells in `\hazard_unit'.
+Finding identical cells in module `\data_memory'.
+Computing hashes of 286 cells of `\data_memory'.
+Finding duplicate cells in `\data_memory'.
+Finding identical cells in module `\control_unit'.
+Computing hashes of 33 cells of `\control_unit'.
+Finding duplicate cells in `\control_unit'.
+Finding identical cells in module `\alu'.
+Computing hashes of 23 cells of `\alu'.
+Finding duplicate cells in `\alu'.
+Removed a total of 1 cells.
+
+13.13. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.14. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \riscv_top..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \program_counter..
+Finding unused cells or wires in module \mem_wb_register..
+Finding unused cells or wires in module \id_exmem_register..
+Finding unused cells or wires in module \if_id_register..
+Finding unused cells or wires in module \instruction_memory..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \hazard_unit..
+Finding unused cells or wires in module \data_memory..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \alu..
+Removed 0 unused cells and 1 unused wires.
+<suppressed ~1 debug messages>
+
+13.15. Executing OPT_EXPR pass (perform const folding).
+Optimizing module riscv_top.
+Optimizing module register_file.
+Optimizing module program_counter.
+Optimizing module mem_wb_register.
+Optimizing module id_exmem_register.
+Optimizing module if_id_register.
+Optimizing module instruction_memory.
+Optimizing module immediate_generator.
+Optimizing module hazard_unit.
+Optimizing module data_memory.
+Optimizing module control_unit.
+Optimizing module alu.
+
+13.16. Rerunning OPT passes. (Maybe there is more to do..)
+
+13.17. Executing OPT_MUXTREE pass (detect dead branches in mux trees).
+Running muxtree optimizer on module \riscv_top..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \register_file..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \program_counter..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \mem_wb_register..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \id_exmem_register..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \if_id_register..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \instruction_memory..
+  Creating internal representation of mux trees.
+  No muxes found in this module.
+Running muxtree optimizer on module \immediate_generator..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \hazard_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \data_memory..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \control_unit..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Running muxtree optimizer on module \alu..
+  Creating internal representation of mux trees.
+  Evaluating internal representation of mux trees.
+  Analyzing evaluation results.
+Removed 0 multiplexer ports.
+<suppressed ~87 debug messages>
+
+13.18. Executing OPT_REDUCE pass (consolidate $*mux and $reduce_* inputs).
+  Optimizing cells in module \riscv_top.
+  Optimizing cells in module \register_file.
+  Optimizing cells in module \program_counter.
+  Optimizing cells in module \mem_wb_register.
+  Optimizing cells in module \id_exmem_register.
+  Optimizing cells in module \if_id_register.
+  Optimizing cells in module \instruction_memory.
+  Optimizing cells in module \immediate_generator.
+  Optimizing cells in module \hazard_unit.
+  Optimizing cells in module \data_memory.
+  Optimizing cells in module \control_unit.
+  Optimizing cells in module \alu.
+Performed a total of 0 changes.
+
+13.19. Executing OPT_MERGE pass (detect identical cells).
+Finding identical cells in module `\riscv_top'.
+Computing hashes of 0 cells of `\riscv_top'.
+Finding duplicate cells in `\riscv_top'.
+Finding identical cells in module `\register_file'.
+Computing hashes of 50 cells of `\register_file'.
+Finding duplicate cells in `\register_file'.
+Finding identical cells in module `\program_counter'.
+Computing hashes of 1 cells of `\program_counter'.
+Finding duplicate cells in `\program_counter'.
+Finding identical cells in module `\mem_wb_register'.
+Computing hashes of 7 cells of `\mem_wb_register'.
+Finding duplicate cells in `\mem_wb_register'.
+Finding identical cells in module `\id_exmem_register'.
+Computing hashes of 14 cells of `\id_exmem_register'.
+Finding duplicate cells in `\id_exmem_register'.
+Finding identical cells in module `\if_id_register'.
+Computing hashes of 7 cells of `\if_id_register'.
+Finding duplicate cells in `\if_id_register'.
+Finding identical cells in module `\instruction_memory'.
+Computing hashes of 258 cells of `\instruction_memory'.
+Finding duplicate cells in `\instruction_memory'.
+Finding identical cells in module `\immediate_generator'.
+Computing hashes of 11 cells of `\immediate_generator'.
+Finding duplicate cells in `\immediate_generator'.
+Finding identical cells in module `\hazard_unit'.
+Computing hashes of 7 cells of `\hazard_unit'.
+Finding duplicate cells in `\hazard_unit'.
+Finding identical cells in module `\data_memory'.
+Computing hashes of 286 cells of `\data_memory'.
+Finding duplicate cells in `\data_memory'.
+Finding identical cells in module `\control_unit'.
+Computing hashes of 33 cells of `\control_unit'.
+Finding duplicate cells in `\control_unit'.
+Finding identical cells in module `\alu'.
+Computing hashes of 23 cells of `\alu'.
+Finding duplicate cells in `\alu'.
+Removed a total of 0 cells.
+
+13.20. Executing OPT_DFF pass (perform DFF optimizations).
+
+13.21. Executing OPT_CLEAN pass (remove unused cells and wires).
+Finding unused cells or wires in module \riscv_top..
+Finding unused cells or wires in module \register_file..
+Finding unused cells or wires in module \program_counter..
+Finding unused cells or wires in module \mem_wb_register..
+Finding unused cells or wires in module \id_exmem_register..
+Finding unused cells or wires in module \if_id_register..
+Finding unused cells or wires in module \instruction_memory..
+Finding unused cells or wires in module \immediate_generator..
+Finding unused cells or wires in module \hazard_unit..
+Finding unused cells or wires in module \data_memory..
+Finding unused cells or wires in module \control_unit..
+Finding unused cells or wires in module \alu..
+
+13.22. Executing OPT_EXPR pass (perform const folding).
+Optimizing module riscv_top.
+Optimizing module register_file.
+Optimizing module program_counter.
+Optimizing module mem_wb_register.
+Optimizing module id_exmem_register.
+Optimizing module if_id_register.
+Optimizing module instruction_memory.
+Optimizing module immediate_generator.
+Optimizing module hazard_unit.
+Optimizing module data_memory.
+Optimizing module control_unit.
+Optimizing module alu.
+
+13.23. Finished fast OPT passes. (There is nothing left to do.)
+
+14. Executing CHECK pass (checking for obvious problems).
+Checking module riscv_top...
+Checking module register_file...
+Checking module program_counter...
+Checking module mem_wb_register...
+Checking module id_exmem_register...
+Checking module if_id_register...
+Checking module instruction_memory...
+Checking module immediate_generator...
+Checking module hazard_unit...
+Checking module data_memory...
+Checking module control_unit...
+Checking module alu...
+Found and reported 0 problems.
+
+15. Printing statistics.
+
+=== riscv_top ===
+
+        +----------Local Count, excluding submodules.
+        | 
+        2 wires
+        2 wire bits
+        2 public wires
+        2 public wire bits
+        2 ports
+        2 port bits
+
+=== register_file ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       24 wires
+      350 wire bits
+        9 public wires
+      145 public wire bits
+        8 ports
+      113 port bits
+        1 memories
+     1024 memory bits
+       50 cells
+        2   $eq
+        3   $logic_and
+        2   $logic_not
+       32   $meminit_v2
+        2   $memrd
+        1   $memwr_v2
+        7   $mux
+        1   $reduce_bool
+
+=== program_counter ===
+
+        +----------Local Count, excluding submodules.
+        | 
+        5 wires
+       67 wire bits
+        5 public wires
+       67 public wire bits
+        5 ports
+       67 port bits
+        1 cells
+        1   $adffe
+
+=== mem_wb_register ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       16 wires
+      210 wire bits
+       16 public wires
+      210 public wire bits
+       16 ports
+      210 port bits
+        7 cells
+        7   $adff
+
+=== id_exmem_register ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       31 wires
+      309 wire bits
+       31 public wires
+      309 public wire bits
+       31 ports
+      309 port bits
+       14 cells
+       14   $adffe
+
+=== if_id_register ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       13 wires
+      261 wire bits
+        8 public wires
+      132 public wire bits
+        8 ports
+      132 port bits
+        7 cells
+        2   $adffe
+        4   $mux
+        1   $reduce_bool
+
+=== instruction_memory ===
+
+        +----------Local Count, excluding submodules.
+        | 
+        3 wires
+       96 wire bits
+        3 public wires
+       96 public wire bits
+        2 ports
+       64 port bits
+        1 memories
+     8192 memory bits
+      258 cells
+      257   $meminit_v2
+        1   $memrd
+
+=== immediate_generator ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       10 wires
+       81 wire bits
+        3 public wires
+       71 public wire bits
+        2 ports
+       64 port bits
+       11 cells
+        8   $eq
+        1   $pmux
+        2   $reduce_or
+
+=== hazard_unit ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       11 wires
+       23 wire bits
+        5 public wires
+       17 public wire bits
+        5 ports
+       17 port bits
+        7 cells
+        2   $eq
+        1   $logic_and
+        1   $logic_or
+        2   $mux
+        1   $reduce_bool
+
+=== data_memory ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       33 wires
+      743 wire bits
+        8 public wires
+      135 public wire bits
+        7 ports
+      103 port bits
+        1 memories
+     8192 memory bits
+      286 cells
+      256   $meminit_v2
+        1   $memrd
+        4   $memwr_v2
+       25   $mux
+
+=== control_unit ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       35 wires
+       69 wire bits
+       11 public wires
+       28 public wire bits
+       11 ports
+       28 port bits
+       33 cells
+       15   $eq
+        1   $logic_not
+        8   $mux
+        4   $pmux
+        5   $reduce_or
+
+=== alu ===
+
+        +----------Local Count, excluding submodules.
+        | 
+       26 wires
+      432 wire bits
+        4 public wires
+      100 public wire bits
+        4 ports
+      100 port bits
+       23 cells
+        1   $add
+        1   $and
+        9   $eq
+        1   $logic_not
+        2   $lt
+        2   $mux
+        1   $or
+        1   $pmux
+        1   $shl
+        1   $shr
+        1   $sshr
+        1   $sub
+        1   $xor
+
+=== design hierarchy ===
+
+        +----------Count including submodules.
+        | 
+        - riscv_top
+
+        +----------Count including submodules.
+        | 
+        2 wires
+        2 wire bits
+        2 public wires
+        2 public wire bits
+        2 ports
+        2 port bits
+        - memories
+        - memory bits
+        - processes
+        - cells
+
+End of script. Logfile hash: b35ffdafe5, time: 0.13s, user: 0.11s, system: 0.01s, MEM: 27.22 MB peak
+Yosys 0.70+post (git sha1 0c11ea098be065e585a90a06e7b7da49936cf231, Release, AppleClang clang++ 21.0.0.21000334)
+Time spent: 45% 11x read_verilog (0 sec), 11% 3x opt_clean (0 sec), ...
