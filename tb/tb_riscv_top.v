@@ -12,8 +12,24 @@ module tb_riscv_top;
         .reset(reset)
     );
 
-    // 100 MHz clock
     always #5 clk = ~clk;
+
+    task check_reg;
+        input [4:0] reg_num;
+        input [31:0] expected;
+        input [255:0] test_name;
+        begin
+            if (uut.RF.registers[reg_num] !== expected) begin
+                $display("FAIL: %0s expected %0d, got %0d",
+                         test_name, expected,
+                         uut.RF.registers[reg_num]);
+                errors = errors + 1;
+            end
+            else begin
+                $display("PASS: %0s = %0d", test_name, expected);
+            end
+        end
+    endtask
 
     initial begin
         $dumpfile("riscv_wave.vcd");
@@ -23,46 +39,35 @@ module tb_riscv_top;
         reset = 1;
         errors = 0;
 
-        // Apply reset
         repeat (2) @(posedge clk);
         @(negedge clk);
         reset = 0;
 
-        // Allow pipeline to execute
-        repeat (20) @(posedge clk);
+        // Allow branch/jump program to execute
+        repeat (40) @(posedge clk);
         #1;
 
-        // Check data memory
-        if (uut.DMEM.mem[0] !== 32'd7) begin
-            $display("FAIL: memory[0] expected 7, got %h",
-                     uut.DMEM.mem[0]);
-            errors = errors + 1;
-        end else begin
-            $display("PASS: memory[0] = 7");
-        end
+        // Initial values
+        check_reg(5'd1, 32'd5, "x1");
+        check_reg(5'd2, 32'd5, "x2");
 
-        // Check loaded value
-        if (uut.RF.registers[2] !== 32'd7) begin
-            $display("FAIL: x2 expected 7, got %h",
-                     uut.RF.registers[2]);
-            errors = errors + 1;
-        end else begin
-            $display("PASS: x2 = 7");
-        end
+        // Branch test results
+        check_reg(5'd3, 32'd7, "BEQ target x3");
+        check_reg(5'd4, 32'd11, "BNE target x4");
+        check_reg(5'd5, 32'd12, "BLT target x5");
+        check_reg(5'd6, 32'd13, "BGE target x6");
 
-        // Check load-use dependent instruction
-        if (uut.RF.registers[4] !== 32'd8) begin
-            $display("FAIL: x4 expected 8, got %h",
-                     uut.RF.registers[4]);
-            errors = errors + 1;
-        end else begin
-            $display("PASS: load-use x4 = 8");
-        end
+        // Jump link addresses and targets
+        check_reg(5'd7, 32'd52, "JAL link x7");
+        check_reg(5'd8, 32'd21, "JAL target x8");
+        check_reg(5'd9, 32'd80, "JALR target x9");
+        check_reg(5'd10, 32'd72, "JALR link x10");
+        check_reg(5'd11, 32'd31, "JALR target x11");
 
         if (errors == 0)
-            $display("ALL TESTS PASSED");
+            $display("ALL BRANCH/JUMP TESTS PASSED");
         else
-            $display("TESTS FAILED: %0d error(s)", errors);
+            $display("BRANCH/JUMP TESTS FAILED: %0d error(s)", errors);
 
         $finish;
     end
