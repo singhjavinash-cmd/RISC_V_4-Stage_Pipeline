@@ -19,7 +19,7 @@ module riscv_top (
     wire stall;
 
     //================================================
-    // ID Stage - Instruction Decode
+    // ID Stage - Decode
     //================================================
     wire [6:0] opcode;
     wire [4:0] rs1, rs2, rd;
@@ -45,7 +45,6 @@ module riscv_top (
     wire branch;
     wire jump;
     wire [3:0] alu_control;
-
     wire [31:0] immediate;
 
     //================================================
@@ -74,6 +73,7 @@ module riscv_top (
     end
 
     assign control_transfer = jump || (branch && branch_taken);
+
     assign branch_target = if_id_pc + immediate;
 
     assign jump_target =
@@ -87,7 +87,7 @@ module riscv_top (
         : (pc + 32'd4);
 
     //================================================
-    // Program Counter and Instruction Memory
+    // Program Counter / Instruction Memory
     //================================================
     program_counter PC (
         .clk(clk),
@@ -125,13 +125,13 @@ module riscv_top (
         .rs2(rs2),
         .rd(mem_wb_rd),
         .write_data(write_back_data),
-        .reg_write(mem_wb_reg_write),
+        .reg_write(mem_wb_reg_write && (mem_wb_rd != 5'd0)),
         .read_data1(read_data1),
         .read_data2(read_data2)
     );
 
     //================================================
-    // Control Unit and Immediate Generator
+    // Control Unit / Immediate Generator
     //================================================
     control_unit CU (
         .opcode(opcode),
@@ -173,7 +173,7 @@ module riscv_top (
     wire [3:0] id_exmem_alu_control;
 
     //================================================
-    // Hazard Detection
+    // Load-use Hazard Detection
     //================================================
     hazard_unit HU (
         .id_rs1(rs1),
@@ -186,7 +186,7 @@ module riscv_top (
     //================================================
     // ID/EXMEM Pipeline Register
     //================================================
-    id_exmem_register ID_EXMEM (
+        id_exmem_register ID_EXMEM (
         .clk(clk),
         .reset(reset),
         .enable(1'b1),
@@ -198,6 +198,8 @@ module riscv_top (
 
         .rs1_in(rs1),
         .rs2_in(rs2),
+
+        // Bubble only for load-use stall
         .rd_in(stall ? 5'd0 : rd),
 
         .reg_write_in(stall ? 1'b0 : reg_write),
@@ -227,14 +229,13 @@ module riscv_top (
     );
 
     //================================================
-    // EX/MEM Stage - MEM/WB Forwarding
+    // EX/MEM - Forwarding
     //================================================
     wire [31:0] forwarded_operand_a;
     wire [31:0] forwarded_operand_b;
     wire [31:0] alu_operand_b;
 
     wire [31:0] alu_result;
-    wire zero_flag;
     wire [31:0] data_memory_read_data;
 
     assign forwarded_operand_a =
@@ -257,11 +258,10 @@ module riscv_top (
         : forwarded_operand_b;
 
     alu ALU (
-        .operand_a(forwarded_operand_a),
-        .operand_b(alu_operand_b),
+        .a(forwarded_operand_a),
+        .b(alu_operand_b),
         .alu_control(id_exmem_alu_control),
-        .alu_result(alu_result),
-        .zero_flag(zero_flag)
+        .result(alu_result)
     );
 
     //================================================
@@ -278,7 +278,7 @@ module riscv_top (
     );
 
     //================================================
-    // MEM/WB Stage
+    // MEM/WB Pipeline Register
     //================================================
     wire [31:0] mem_wb_pc;
     wire [31:0] mem_wb_alu_result;
@@ -296,7 +296,9 @@ module riscv_top (
         .memory_data_in(data_memory_read_data),
 
         .rd_in(id_exmem_rd),
-        .reg_write_in(id_exmem_reg_write),
+        .reg_write_in(
+            id_exmem_reg_write && (id_exmem_rd != 5'd0)
+        ),
         .mem_to_reg_in(id_exmem_mem_to_reg),
         .jump_in(id_exmem_jump),
 
@@ -313,9 +315,13 @@ module riscv_top (
     //================================================
     // Writeback
     //================================================
+    wire [31:0] jump_link_data;
+
+    assign jump_link_data = mem_wb_pc + 32'd4;
+
     assign write_back_data =
         mem_wb_jump
-        ? (mem_wb_pc + 32'd4)
+        ? jump_link_data
         : (mem_wb_mem_to_reg
            ? mem_wb_memory_data
            : mem_wb_alu_result);
