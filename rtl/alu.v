@@ -1,25 +1,35 @@
-module alu(
-    input [31:0] operand_a,
-    input [31:0] operand_b,
-    input [3:0] alu_control,
-    output reg [31:0] alu_result,
-    output reg zero_flag
+module alu (
+    input  [31:0] a,
+    input  [31:0] b,
+    input  [3:0]  alu_control,
+    output reg [31:0] result
 );
-always @(*) begin
-    case (alu_control)
-        4'b0000: alu_result = operand_a + operand_b; // ADD
-        4'b0001: alu_result = operand_a - operand_b; // SUB
-        4'b0010: alu_result = operand_a & operand_b; // AND
-        4'b0011: alu_result = operand_a | operand_b; // OR
-        4'b0100: alu_result = operand_a ^ operand_b; // XOR
-        4'b0101: alu_result = ($signed(operand_a) < $signed(operand_b)) ? 32'b1 : 32'b0; // SLT (signed comparison)
-        4'b0110: alu_result = (operand_a < operand_b) ? 32'b1 : 32'b0; // SLTU (unsigned comparison)
-        4'b0111: alu_result = operand_a << operand_b[4:0]; // SLL
-        4'b1000: alu_result = operand_a >> operand_b[4:0]; // SRL
-        4'b1001: alu_result = $signed(operand_a) >>> operand_b[4:0]; // SRA
-        default: alu_result = 32'b0;
-    endcase
 
-    zero_flag = (alu_result == 32'b0);
-end
+    localparam ALU_ADD  = 4'b0000;
+    localparam ALU_SUB  = 4'b0001;
+    localparam ALU_AND  = 4'b0010;
+    localparam ALU_OR   = 4'b0011;
+    localparam ALU_XOR  = 4'b0100;
+    localparam ALU_SLT  = 4'b0101;
+    localparam ALU_SLTU = 4'b0110;
+    localparam ALU_SLL  = 4'b0111;
+    localparam ALU_SRL  = 4'b1000;
+    localparam ALU_SRA  = 4'b1001;
+
+    always @(*) begin
+        case (alu_control)
+            ALU_ADD:  result = a + b;
+            ALU_SUB:  result = a - b;
+            ALU_AND:  result = a & b;
+            ALU_OR:   result = a | b;
+            ALU_XOR:  result = a ^ b;
+            ALU_SLT:  result = ($signed(a) < $signed(b)) ? 32'd1 : 32'd0;
+            ALU_SLTU: result = (a < b) ? 32'd1 : 32'd0;
+            ALU_SLL:  result = a << b[4:0];
+            ALU_SRL:  result = a >> b[4:0];
+            ALU_SRA:  result = $signed(a) >>> b[4:0];
+            default:  result = 32'd0;
+        endcase
+    end
+
 endmodule

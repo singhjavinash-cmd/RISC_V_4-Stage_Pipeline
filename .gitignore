@@ -1,1 +1,8 @@
+
+# Simulation outputs
 sim.out
+*.vcd
+alu_test.out
+
+# macOS
+.DS_Store
