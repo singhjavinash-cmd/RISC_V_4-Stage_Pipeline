@@ -78,3 +78,30 @@ The processor was simulated using Icarus Verilog, and the waveform was inspected
 
 The simulation waveform is available in [`docs/riscv_addi_writeback_waveform.png`](docs/riscv_addi_writeback_waveform.png).
 
+## Verification
+
+The processor was simulated using Icarus Verilog with a self-checking testbench.
+
+### Test Results
+
+| Test | Expected Result | Status |
+|---|---:|---|
+| `ADDI x1, x0, 5` | `x1 = 5` | PASS |
+| `ADDI x2, x0, 3` | `x2 = 3` | PASS |
+
+**Simulation result:** `ALL TESTS PASSED`
+
+### Run Simulation
+
+```bash
+iverilog -g2012 -o sim.out rtl/*.v tb/tb_riscv_top.v
+vvp sim.out
+```
+
+### Current Scope and Limitations
+
+- Basic 4-stage pipeline: IF, ID, EX/MEM, WB
+- Supports the instructions implemented in the current RTL
+- Branch/jump control flow and hazard handling are not yet fully implemented
+- Verification currently covers the listed test cases
+
