@@ -82,7 +82,7 @@ The testbench generates `riscv_wave.vcd`. Open it using GTKWave:
 
 ```bash
 gtkwave riscv_wave.vcd
-```
+
 
 ## Verification Results
 
