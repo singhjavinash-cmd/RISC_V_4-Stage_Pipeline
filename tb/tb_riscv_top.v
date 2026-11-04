@@ -28,6 +28,20 @@ module tb_riscv_top;
         @(negedge clk);
         reset = 0;
 
+        // Debug monitor
+        $monitor("t=%0t pc=%h instr=%h | ID reg_write=%b alu_src=%b alu_ctrl=%b | EX result=%h rd=%d | WB write=%b rd=%d data=%h",
+         $time,
+         uut.pc,
+         uut.if_id_instruction,
+         uut.reg_write,
+         uut.alu_src,
+         uut.alu_control,
+         uut.alu_result,
+         uut.id_exmem_rd,
+         uut.mem_wb_reg_write,
+         uut.mem_wb_rd,
+         uut.write_back_data);
+
         // Allow pipeline to execute
         repeat (10) @(posedge clk);
         #1;

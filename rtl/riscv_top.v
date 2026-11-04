@@ -1,19 +1,26 @@
-module riscv_top(
+
+module riscv_top (
     input clk,
     input reset
 );
 
-    // ---------------- IF Stage ----------------
+    //================================================
+    // IF Stage
+    //================================================
     wire [31:0] pc;
     wire [31:0] next_pc;
     wire [31:0] instruction;
     wire [31:0] if_id_pc;
     wire [31:0] if_id_instruction;
 
+    wire stall;
+
+    assign next_pc = pc + 32'd4;
+
     program_counter PC (
         .clk(clk),
         .reset(reset),
-        .pc_enable(1'b1),
+        .pc_enable(~stall),
         .next_pc(next_pc),
         .pc(pc)
     );
@@ -26,16 +33,16 @@ module riscv_top(
     if_id_register IF_ID (
         .clk(clk),
         .reset(reset),
-        .enable(1'b1),
+        .enable(~stall),
         .pc_in(pc),
         .instruction_in(instruction),
         .pc_out(if_id_pc),
         .instruction_out(if_id_instruction)
     );
 
-    assign next_pc = pc + 32'd4;
-
-    // ---------------- ID Stage ----------------
+    //================================================
+    // ID Stage - Instruction Decode
+    //================================================
     wire [6:0] opcode;
     wire [4:0] rs1, rs2, rd;
     wire [2:0] funct3;
@@ -96,7 +103,9 @@ module riscv_top(
         .immediate(immediate)
     );
 
-    // ---------------- ID/EXMEM Pipeline Register ----------------
+    //================================================
+    // Hazard Detection Unit
+    //================================================
     wire [31:0] id_exmem_pc;
     wire [31:0] id_exmem_operand_a;
     wire [31:0] id_exmem_operand_b;
@@ -110,6 +119,18 @@ module riscv_top(
     wire id_exmem_alu_src;
     wire [3:0] id_exmem_alu_control;
 
+    hazard_unit HU (
+        .id_rs1(rs1),
+        .id_rs2(rs2),
+        .exmem_rd(id_exmem_rd),
+        .exmem_mem_read(id_exmem_mem_read),
+        .stall(stall)
+    );
+
+    //================================================
+    // ID/EXMEM Pipeline Register
+    // Insert bubble when stall is asserted
+    //================================================
     id_exmem_register ID_EXMEM (
         .clk(clk),
         .reset(reset),
@@ -118,13 +139,13 @@ module riscv_top(
         .operand_a_in(read_data1),
         .operand_b_in(read_data2),
         .immediate_in(immediate),
-        .rd_in(rd),
-        .reg_write_in(reg_write),
-        .mem_read_in(mem_read),
-        .mem_write_in(mem_write),
-        .mem_to_reg_in(mem_to_reg),
-        .alu_src_in(alu_src),
-        .alu_control_in(alu_control),
+        .rd_in(stall ? 5'd0 : rd),
+        .reg_write_in(stall ? 1'b0 : reg_write),
+        .mem_read_in(stall ? 1'b0 : mem_read),
+        .mem_write_in(stall ? 1'b0 : mem_write),
+        .mem_to_reg_in(stall ? 1'b0 : mem_to_reg),
+        .alu_src_in(stall ? 1'b0 : alu_src),
+        .alu_control_in(stall ? 4'd0 : alu_control),
         .pc_out(id_exmem_pc),
         .operand_a_out(id_exmem_operand_a),
         .operand_b_out(id_exmem_operand_b),
@@ -138,7 +159,9 @@ module riscv_top(
         .alu_control_out(id_exmem_alu_control)
     );
 
-    // ---------------- EX/MEM Stage ----------------
+    //================================================
+    // EX/MEM Stage
+    //================================================
     wire [31:0] alu_operand_b;
     wire [31:0] alu_result;
     wire zero_flag;
@@ -166,7 +189,9 @@ module riscv_top(
         .read_data(data_memory_read_data)
     );
 
-    // ---------------- MEM/WB Stage ----------------
+    //================================================
+    // MEM/WB Stage
+    //================================================
     wire [31:0] mem_wb_alu_result;
     wire [31:0] mem_wb_memory_data;
     wire mem_wb_mem_to_reg;

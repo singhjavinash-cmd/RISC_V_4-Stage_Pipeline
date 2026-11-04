@@ -1,4 +1,5 @@
-module data_memory(
+
+module data_memory (
     input clk,
     input [31:0] address,
     input [31:0] write_data,
@@ -8,8 +9,16 @@ module data_memory(
     output reg [31:0] read_data
 );
 
-    // 256 words, 32 bits per word
+    // 256 words, 32 bits each
     reg [31:0] mem [0:255];
+
+    integer i;
+
+    // Initialize memory for simulation
+    initial begin
+        for (i = 0; i < 256; i = i + 1)
+            mem[i] = 32'b0;
+    end
 
     // Synchronous write with byte enables
     always @(posedge clk) begin
