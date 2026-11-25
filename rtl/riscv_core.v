@@ -1,0 +1,327 @@
+`timescale 1ns/1ps
+
+module riscv_core (
+    input clk,
+    input reset,
+    // Instruction Memory Interface
+    output [31:0] imem_addr,
+    input  [31:0] imem_data,
+    // Data Memory Interface
+    output [31:0] dmem_addr,
+    output [31:0] dmem_wdata,
+    output        dmem_we,
+    output        dmem_re,
+    input  [31:0] dmem_rdata
+);
+
+    //================================================
+    // IF Stage
+    //================================================
+    wire [31:0] pc;
+    wire [31:0] next_pc;
+    wire [31:0] instruction;
+
+    wire [31:0] if_id_pc;
+    wire [31:0] if_id_instruction;
+
+    wire stall;
+
+    assign imem_addr   = pc;
+    assign instruction = imem_data;
+
+    //================================================
+    // ID Stage - Decode
+    //================================================
+    wire [6:0] opcode;
+    wire [4:0] rs1, rs2, rd;
+    wire [2:0] funct3;
+    wire [6:0] funct7;
+
+    assign opcode = if_id_instruction[6:0];
+    assign rd     = if_id_instruction[11:7];
+    assign funct3 = if_id_instruction[14:12];
+    assign rs1    = if_id_instruction[19:15];
+    assign rs2    = if_id_instruction[24:20];
+    assign funct7 = if_id_instruction[31:25];
+
+    wire [31:0] read_data1;
+    wire [31:0] read_data2;
+    wire [31:0] write_back_data;
+
+    wire reg_write;
+    wire mem_read;
+    wire mem_write;
+    wire mem_to_reg;
+    wire alu_src;
+    wire branch;
+    wire jump;
+    wire [3:0] alu_control;
+    wire [31:0] immediate;
+
+    //================================================
+    // Branch / Jump Control
+    //================================================
+    reg branch_taken;
+
+    wire control_transfer;
+    wire [31:0] branch_target;
+    wire [31:0] jump_target;
+
+    always @(*) begin
+        branch_taken = 1'b0;
+
+        case (funct3)
+            3'b000: branch_taken = (read_data1 == read_data2);
+            3'b001: branch_taken = (read_data1 != read_data2);
+            3'b100: branch_taken = ($signed(read_data1) < $signed(read_data2));
+            3'b101: branch_taken = ($signed(read_data1) >= $signed(read_data2));
+            3'b110: branch_taken = (read_data1 < read_data2);
+            3'b111: branch_taken = (read_data1 >= read_data2);
+            default: branch_taken = 1'b0;
+        endcase
+    end
+
+    assign control_transfer = jump || (branch && branch_taken);
+    assign branch_target    = if_id_pc + immediate;
+
+    assign jump_target =
+        (opcode == 7'b1100111)
+        ? ((read_data1 + immediate) & 32'hFFFFFFFE)
+        : (if_id_pc + immediate);
+
+    assign next_pc =
+        control_transfer
+        ? (jump ? jump_target : branch_target)
+        : (pc + 32'd4);
+
+    //================================================
+    // Program Counter & IF/ID Register
+    //================================================
+    program_counter PC (
+        .clk(clk),
+        .reset(reset),
+        .pc_enable(~stall || control_transfer),
+        .next_pc(next_pc),
+        .pc(pc)
+    );
+
+    if_id_register IF_ID (
+        .clk(clk),
+        .reset(reset),
+        .enable(~stall),
+        .flush(control_transfer),
+        .pc_in(pc),
+        .instruction_in(instruction),
+        .pc_out(if_id_pc),
+        .instruction_out(if_id_instruction)
+    );
+
+    //================================================
+    // Register File
+    //================================================
+    wire [4:0] mem_wb_rd;
+    wire mem_wb_reg_write;
+
+    register_file RF (
+        .clk(clk),
+        .rs1(rs1),
+        .rs2(rs2),
+        .rd(mem_wb_rd),
+        .write_data(write_back_data),
+        .reg_write(mem_wb_reg_write && (mem_wb_rd != 5'd0)),
+        .read_data1(read_data1),
+        .read_data2(read_data2)
+    );
+
+    //================================================
+    // Control Unit / Immediate Generator
+    //================================================
+    control_unit CU (
+        .opcode(opcode),
+        .funct3(funct3),
+        .funct7(funct7),
+        .reg_write(reg_write),
+        .mem_read(mem_read),
+        .mem_write(mem_write),
+        .mem_to_reg(mem_to_reg),
+        .alu_src(alu_src),
+        .branch(branch),
+        .jump(jump),
+        .alu_control(alu_control)
+    );
+
+    immediate_generator IMM_GEN (
+        .instruction(if_id_instruction),
+        .immediate(immediate)
+    );
+
+    //================================================
+    // ID/EXMEM Signals
+    //================================================
+    wire [31:0] id_exmem_pc;
+    wire [31:0] id_exmem_operand_a;
+    wire [31:0] id_exmem_operand_b;
+    wire [31:0] id_exmem_immediate;
+
+    wire [4:0] id_exmem_rs1;
+    wire [4:0] id_exmem_rs2;
+    wire [4:0] id_exmem_rd;
+
+    wire id_exmem_reg_write;
+    wire id_exmem_mem_read;
+    wire id_exmem_mem_write;
+    wire id_exmem_mem_to_reg;
+    wire id_exmem_alu_src;
+    wire id_exmem_jump;
+    wire [3:0] id_exmem_alu_control;
+
+    //================================================
+    // Load-use Hazard Detection
+    //================================================
+    hazard_unit HU (
+        .id_rs1(rs1),
+        .id_rs2(rs2),
+        .exmem_rd(id_exmem_rd),
+        .exmem_mem_read(id_exmem_mem_read),
+        .stall(stall)
+    );
+
+    //================================================
+    // ID/EXMEM Pipeline Register
+    //================================================
+    id_exmem_register ID_EXMEM (
+        .clk(clk),
+        .reset(reset),
+        .enable(1'b1),
+
+        .pc_in(if_id_pc),
+        .operand_a_in(read_data1),
+        .operand_b_in(read_data2),
+        .immediate_in(immediate),
+
+        .rs1_in(rs1),
+        .rs2_in(rs2),
+
+        .rd_in(stall ? 5'd0 : rd),
+
+        .reg_write_in(stall ? 1'b0 : reg_write),
+        .mem_read_in(stall ? 1'b0 : mem_read),
+        .mem_write_in(stall ? 1'b0 : mem_write),
+        .mem_to_reg_in(stall ? 1'b0 : mem_to_reg),
+        .alu_src_in(stall ? 1'b0 : alu_src),
+        .jump_in(stall ? 1'b0 : jump),
+        .alu_control_in(stall ? 4'd0 : alu_control),
+
+        .pc_out(id_exmem_pc),
+        .operand_a_out(id_exmem_operand_a),
+        .operand_b_out(id_exmem_operand_b),
+        .immediate_out(id_exmem_immediate),
+
+        .rs1_out(id_exmem_rs1),
+        .rs2_out(id_exmem_rs2),
+        .rd_out(id_exmem_rd),
+
+        .reg_write_out(id_exmem_reg_write),
+        .mem_read_out(id_exmem_mem_read),
+        .mem_write_out(id_exmem_mem_write),
+        .mem_to_reg_out(id_exmem_mem_to_reg),
+        .alu_src_out(id_exmem_alu_src),
+        .jump_out(id_exmem_jump),
+        .alu_control_out(id_exmem_alu_control)
+    );
+
+    //================================================
+    // EX/MEM - Forwarding & ALU
+    //================================================
+    wire [31:0] forwarded_operand_a;
+    wire [31:0] forwarded_operand_b;
+    wire [31:0] alu_operand_b;
+
+    wire [31:0] alu_result;
+    wire [31:0] data_memory_read_data;
+
+    assign forwarded_operand_a =
+        (mem_wb_reg_write &&
+         (mem_wb_rd != 5'd0) &&
+         (mem_wb_rd == id_exmem_rs1))
+        ? write_back_data
+        : id_exmem_operand_a;
+
+    assign forwarded_operand_b =
+        (mem_wb_reg_write &&
+         (mem_wb_rd != 5'd0) &&
+         (mem_wb_rd == id_exmem_rs2))
+        ? write_back_data
+        : id_exmem_operand_b;
+
+    assign alu_operand_b =
+        id_exmem_alu_src
+        ? id_exmem_immediate
+        : forwarded_operand_b;
+
+    alu ALU (
+        .a(forwarded_operand_a),
+        .b(alu_operand_b),
+        .alu_control(id_exmem_alu_control),
+        .result(alu_result)
+    );
+
+    //================================================
+    // External Data Memory Interface
+    //================================================
+    assign dmem_addr             = alu_result;
+    assign dmem_wdata            = forwarded_operand_b;
+    assign dmem_we               = id_exmem_mem_write;
+    assign dmem_re               = id_exmem_mem_read;
+    assign data_memory_read_data = dmem_rdata;
+
+    //================================================
+    // MEM/WB Pipeline Register
+    //================================================
+    wire [31:0] mem_wb_pc;
+    wire [31:0] mem_wb_alu_result;
+    wire [31:0] mem_wb_memory_data;
+
+    wire mem_wb_mem_to_reg;
+    wire mem_wb_jump;
+
+    mem_wb_register MEM_WB (
+        .clk(clk),
+        .reset(reset),
+
+        .pc_in(id_exmem_pc),
+        .alu_result_in(alu_result),
+        .memory_data_in(data_memory_read_data),
+
+        .rd_in(id_exmem_rd),
+        .reg_write_in(
+            id_exmem_reg_write && (id_exmem_rd != 5'd0)
+        ),
+        .mem_to_reg_in(id_exmem_mem_to_reg),
+        .jump_in(id_exmem_jump),
+
+        .pc_out(mem_wb_pc),
+        .alu_result_out(mem_wb_alu_result),
+        .memory_data_out(mem_wb_memory_data),
+
+        .rd_out(mem_wb_rd),
+        .reg_write_out(mem_wb_reg_write),
+        .mem_to_reg_out(mem_wb_mem_to_reg),
+        .jump_out(mem_wb_jump)
+    );
+
+    //================================================
+    // Writeback
+    //================================================
+    wire [31:0] jump_link_data;
+
+    assign jump_link_data = mem_wb_pc + 32'd4;
+
+    assign write_back_data =
+        mem_wb_jump
+        ? jump_link_data
+        : (mem_wb_mem_to_reg
+           ? mem_wb_memory_data
+           : mem_wb_alu_result);
+
+endmodule

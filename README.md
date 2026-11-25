@@ -132,3 +132,40 @@ The synthesis report is available at
 
 The report includes the synthesized hierarchy, cell statistics,
 and structural checks.
+
+---
+
+## Physical Design (RTL-to-GDSII Flow)
+
+Complete automated RTL-to-GDSII ASIC physical design flow for the 4-stage pipelined RISC-V core (`rtl/riscv_core.v`) executed using **LibreLane / OpenROAD** with the **IHP 130nm (`sg13g2`)** open-source PDK.
+
+### Final GDSII Layout
+![RISC-V Core GDSII Layout](docs/layout_gds.png)
+
+### PPA & Signoff Summary
+| Metric | Result |
+| :--- | :--- |
+| **Top Module** | `riscv_core` |
+| **Technology / PDK** | IHP 130nm (`sg13g2`) |
+| **Clock Period** | 20.0 ns (50 MHz) |
+| **Die Area** | 427,301.00 µm² |
+| **Core Area** | 399,360.00 µm² |
+| **Core Utilization** | 48.19% |
+| **Standard Cell Count** | 12,158 |
+| **Total Routed Wirelength** | 647,943 µm |
+| **Setup Worst Slack (WNS)** | 4.580 ns |
+| **Hold Worst Slack (WNS)** | 0.100 ns |
+| **Total Power** | 6.682 mW |
+| **Magic DRC Violations** | 0 (Passed) |
+| **KLayout DRC Violations** | 0 (Passed) |
+| **Netgen LVS Errors** | 0 (Passed) |
+| **Antenna Violations** | 0 (Passed) |
+
+### Physical Design Deliverables (`physical_design/`)
+* **GDSII Layout:** `physical_design/gds/riscv_core.gds`
+* **DEF / LEF Views:** `physical_design/def/`, `physical_design/lef/`
+* **Gate-Level Netlists:** `physical_design/nl/`, `physical_design/pnl/`
+* **Parasitics & Timing Views:** `physical_design/spef/`, `physical_design/sdf/`, `physical_design/lib/`
+* **Signoff & PPA Reports:** `physical_design/metrics.json`, `physical_design/reports/`
+* **Flow Configuration:** `config.json`
+

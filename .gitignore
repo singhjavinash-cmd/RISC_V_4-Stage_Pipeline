@@ -7,4 +7,4 @@ alu_test.out
 # macOS
 .DS_Store
 # Synthesis output
-synth_netlist.v
+synth_netlist.vruns/

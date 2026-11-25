@@ -1,0 +1,16 @@
+{
+  "DESIGN_NAME": "riscv_core",
+  "VERILOG_FILES": [
+    "dir::rtl/riscv_core.v",
+    "dir::rtl/alu.v",
+    "dir::rtl/control_unit.v",
+    "dir::rtl/hazard_unit.v",
+    "dir::rtl/immediate_generator.v",
+    "dir::rtl/pipeline_registers.v",
+    "dir::rtl/program_counter.v",
+    "dir::rtl/register_file.v"
+  ],
+  "CLOCK_PORT": "clk",
+  "CLOCK_PERIOD": 20.0,
+  "FP_CORE_UTIL": 40
+}
