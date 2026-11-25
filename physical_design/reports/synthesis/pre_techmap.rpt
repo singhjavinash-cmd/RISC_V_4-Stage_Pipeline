@@ -1,0 +1,45 @@
+145. Printing statistics.
+
+=== riscv_core ===
+
+        +----------Local Count, excluding submodules.
+        | 
+     4773 wires
+     6622 wire bits
+       88 public wires
+     1782 public wire bits
+        9 ports
+      164 port bits
+     6372 cells
+       64   $_ANDNOT_
+      893   $_AND_
+       93   $_DFFE_PP0P_
+        3   $_DFFE_PP1P_
+     1024   $_DFFE_PP_
+      261   $_DFF_PP0_
+        1   $_DFF_PP1_
+     2331   $_MUX_
+     1017   $_NAND_
+       73   $_NOR_
+       27   $_NOT_
+      114   $_ORNOT_
+      231   $_OR_
+       67   $_XNOR_
+      173   $_XOR_
+
+   Area for cell type $_ANDNOT_ is unknown!
+   Area for cell type $_AND_ is unknown!
+   Area for cell type $_DFFE_PP0P_ is unknown!
+   Area for cell type $_DFFE_PP1P_ is unknown!
+   Area for cell type $_DFFE_PP_ is unknown!
+   Area for cell type $_DFF_PP0_ is unknown!
+   Area for cell type $_DFF_PP1_ is unknown!
+   Area for cell type $_MUX_ is unknown!
+   Area for cell type $_NAND_ is unknown!
+   Area for cell type $_NOR_ is unknown!
+   Area for cell type $_NOT_ is unknown!
+   Area for cell type $_ORNOT_ is unknown!
+   Area for cell type $_OR_ is unknown!
+   Area for cell type $_XNOR_ is unknown!
+   Area for cell type $_XOR_ is unknown!
+

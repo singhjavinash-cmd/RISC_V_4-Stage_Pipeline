@@ -1,0 +1,67 @@
+{
+   "creator": "Yosys 0.71 (git sha1 b4c586fd3, Release, GNU /usr/bin/c++ 13.3.0)",
+   "invocation": "stat -json -liberty /foss/pdks/ihp-sg13g2/libs.ref/sg13g2_stdcell/lib/sg13g2_stdcell_typ_1p20V_25C.lib.gz -liberty /foss/pdks/ihp-sg13g2/libs.ref/sg13g2_io/lib/sg13g2_io_typ_1p2V_3p3V_25C.lib.gz ",
+   "modules": {
+      "\\riscv_core": {
+         "num_wires":         4773,
+         "num_wire_bits":     6622,
+         "num_pub_wires":     88,
+         "num_pub_wire_bits": 1782,
+         "num_ports":         9,
+         "num_port_bits":     164,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         6372,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 64,
+            "$_AND_": 893,
+            "$_DFFE_PP0P_": 93,
+            "$_DFFE_PP1P_": 3,
+            "$_DFFE_PP_": 1024,
+            "$_DFF_PP0_": 261,
+            "$_DFF_PP1_": 1,
+            "$_MUX_": 2331,
+            "$_NAND_": 1017,
+            "$_NOR_": 73,
+            "$_NOT_": 27,
+            "$_ORNOT_": 114,
+            "$_OR_": 231,
+            "$_XNOR_": 67,
+            "$_XOR_": 173
+         }
+      }
+   },
+      "design": {
+         "num_wires":         4773,
+         "num_wire_bits":     6622,
+         "num_pub_wires":     88,
+         "num_pub_wire_bits": 1782,
+         "num_ports":         9,
+         "num_port_bits":     164,
+         "num_memories":      0,
+         "num_memory_bits":   0,
+         "num_processes":     0,
+         "num_cells":         6372,
+         "num_submodules":       0,
+         "num_cells_by_type": {
+            "$_ANDNOT_": 64,
+            "$_AND_": 893,
+            "$_DFFE_PP0P_": 93,
+            "$_DFFE_PP1P_": 3,
+            "$_DFFE_PP_": 1024,
+            "$_DFF_PP0_": 261,
+            "$_DFF_PP1_": 1,
+            "$_MUX_": 2331,
+            "$_NAND_": 1017,
+            "$_NOR_": 73,
+            "$_NOT_": 27,
+            "$_ORNOT_": 114,
+            "$_OR_": 231,
+            "$_XNOR_": 67,
+            "$_XOR_": 173
+         }
+      }
+}
+
