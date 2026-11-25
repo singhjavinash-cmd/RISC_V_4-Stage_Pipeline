@@ -8,3 +8,6 @@ alu_test.out
 .DS_Store
 # Synthesis output
 synth_netlist.vruns/
+
+runs/
+.DS_Store
